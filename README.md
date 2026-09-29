@@ -27,7 +27,7 @@
 This is a fork of [RyanEwen/ImmichDrive](https://github.com/RyanEwen/ImmichDrive). The upstream
 project is distributed only through the Microsoft Store (as a paid app), and its GitHub releases
 deliberately carry no installable files. This fork exists for one reason: to publish a
-**ready-to-install** on the [Releases](https://github.com/Nathan-Wrpt/ImmichDrive/releases)
+**ready-to-install package** on the [Releases](https://github.com/Nathan-Wrpt/ImmichDrive/releases)
 page, so you can install ImmichDrive without going through the Microsoft Store and without
 setting up a build environment (.NET SDK, Windows SDK tools, signing certificate).
 
