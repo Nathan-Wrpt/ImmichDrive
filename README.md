@@ -9,12 +9,6 @@
 </p>
 
 <p align="center">
-  <a href="https://apps.microsoft.com/detail/9MWC6165N7DH">
-    <img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Download Drive for Immich from the Microsoft Store" height="56">
-  </a>
-</p>
-
-<p align="center">
   <img src="docs/explorer-thumbnails.png" alt="Real thumbnails on demand inside a month folder" width="760">
 </p>
 
@@ -27,6 +21,33 @@
   &nbsp;&nbsp;
   <img src="docs/tray-flyout.png" alt="System-tray flyout" width="380">
 </p>
+
+## About this fork
+
+This is a fork of [RyanEwen/ImmichDrive](https://github.com/RyanEwen/ImmichDrive). The upstream
+project is distributed only through the Microsoft Store (as a paid app), and its GitHub releases
+deliberately carry no installable files. This fork exists for one reason: to publish a
+**ready-to-install** on the [Releases](https://github.com/Nathan-Wrpt/ImmichDrive/releases)
+page, so you can install ImmichDrive without going through the Microsoft Store and without
+setting up a build environment (.NET SDK, Windows SDK tools, signing certificate).
+
+The code changes from upstream are small: the "Our other apps" page is removed, the About page
+links to this fork, and **Check for updates** looks at this fork's GitHub releases instead of the
+Microsoft Store. Packages are built with the repository's own `build-msix.ps1` and signed with a self-signed certificate, so installing one
+means trusting that certificate on your PC. If you'd rather not, or want to support the
+original author, buy it from the [Microsoft Store](https://apps.microsoft.com/detail/9MWC6165N7DH)
+instead. Redistribution here is noncommercial, as the [license](LICENSE.md) requires; these
+builds are free.
+
+### Installing from this fork
+
+1. Download `Install.ps1`, `ImmichDrive.cer`, and the `.msix` for your PC (`x64` for most PCs,
+   `ARM64` for Snapdragon/ARM devices) from the latest
+   [release](https://github.com/Nathan-Wrpt/ImmichDrive/releases) into one folder.
+2. Right-click `Install.ps1` → **Run with PowerShell**. Accept the admin prompt. It is needed once,
+   to trust the signing certificate. Or from a PowerShell prompt in that folder:
+   `powershell -ExecutionPolicy Bypass -File .\Install.ps1`
+3. Open **ImmichDrive** from the Start menu and continue with [Setup](#setup-minimal) step 2.
 
 Take a photo on your phone, let it auto-sync to Immich, and then grab it straight from your
 computer's file picker — no need to open the Immich web UI, download anything by hand, or
@@ -55,7 +76,7 @@ and freeing space dehydrates it back to a placeholder.
 
 ## Setup (minimal)
 
-1. Install **ImmichDrive** from the [Microsoft Store](https://apps.microsoft.com/detail/9MWC6165N7DH), where it is listed as **Drive for Immich**.
+1. Install **ImmichDrive** from this fork's [releases](#installing-from-this-fork).
 2. Open **ImmichDrive** and enter:
    - your **Immich server URL** (e.g. `https://photos.example.com`)
    - an **API key** (Immich → *Account Settings → API Keys → New API Key*).
@@ -75,11 +96,10 @@ Building from source, the MSIX packaging pipeline, and how the pieces fit togeth
 app, the thumbnail shell extension, the Cloud Files provider, and the on-disk index — are
 documented in **[DEVELOPMENT.md](DEVELOPMENT.md)**.
 
-The [Microsoft Store](https://apps.microsoft.com/detail/9MWC6165N7DH) is the install route.
-Releases in this repository carry notes and a tag only, with no files attached: ImmichDrive
-registers its Cloud Files sync root and its thumbnail handler from the package manifest, so it
-needs package identity (MSIX) to work at all and an unpackaged build is not a usable app. If you
-want to run your own copy from source, build it with the steps in DEVELOPMENT.md.
+ImmichDrive registers its Cloud Files sync root and its thumbnail handler from the package
+manifest, so it needs package identity (MSIX) to work at all and an unpackaged build is not a
+usable app. That is why this fork's releases ship signed MSIX packages rather than a loose exe.
+If you want to build your own copy from source, follow the steps in DEVELOPMENT.md.
 
 ## License
 

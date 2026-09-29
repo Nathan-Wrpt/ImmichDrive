@@ -20,7 +20,7 @@ public static class UpdateService
 {
     private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
-    private const string Owner = "RyanEwen";
+    private const string Owner = "Nathan-Wrpt";
     private const string Repo = "ImmichDrive";
 
     /// <summary>Store product ID for the app listed as Drive for Immich in the Store.</summary>
@@ -63,7 +63,7 @@ public static class UpdateService
     /// Check for an update from whichever channel actually installed this copy.
     /// </summary>
     public static Task<UpdateCheckResult?> CheckForUpdateAsync() =>
-        IsPackaged ? CheckForStoreUpdateAsync() : CheckGitHubForUpdateAsync();
+        IsStoreInstalled ? CheckForStoreUpdateAsync() : CheckGitHubForUpdateAsync();
 
     /// <summary>
     /// Ask the Store what it has for this package.
@@ -329,6 +329,26 @@ public static class UpdateService
     /// change while the process lives.
     /// </remarks>
     public static bool IsPackaged { get; } = DetectPackaged();
+
+    /// <summary>
+    /// True only when the Microsoft Store installed this copy (the package carries the Store's
+    /// signature). Sideloaded MSIX builds from GitHub releases are packaged too, but the Store
+    /// knows nothing about them, so they check GitHub releases instead.
+    /// </summary>
+    public static bool IsStoreInstalled { get; } = IsPackaged && DetectStoreSigned();
+
+    private static bool DetectStoreSigned()
+    {
+        try
+        {
+            return global::Windows.ApplicationModel.Package.Current.SignatureKind
+                == global::Windows.ApplicationModel.PackageSignatureKind.Store;
+        }
+        catch
+        {
+            return false;
+        }
+    }
 
     private static bool DetectPackaged()
     {

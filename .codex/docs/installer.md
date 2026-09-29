@@ -161,3 +161,16 @@ AppData.
   `settings.json` + `index.db`.
 - The Cloud Files sync root is registered at **runtime** (`StorageProviderSyncRootManager`),
   not by the installer.
+
+## Fork: sideload releases (Nathan-Wrpt/ImmichDrive)
+
+This fork publishes signed sideload MSIX packages on GitHub Releases, in contrast to the
+upstream no-binaries policy above. Each release attaches both `ImmichDrive-<ver>-<arch>.msix`,
+the public `ImmichDrive.cer`, `LICENSE.md` (required by PolyForm Noncommercial), and
+`ImmichDriveMSIX/Install.ps1` (trusts the cert in `LocalMachine\TrustedPeople` once, then
+installs the MSIX for the PC's architecture). Never attach or commit `ImmichDrive.pfx`; every
+release must be signed with the same PFX or existing installs cannot update in place.
+
+`UpdateService.IsStoreInstalled` (package `SignatureKind == Store`) decides the update channel:
+Store installs keep the Store path; sideloaded and unpackaged copies check this fork's
+GitHub releases and open the release page.

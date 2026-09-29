@@ -100,7 +100,7 @@
                     <TextBlock Text="View the project on GitHub" FontSize="12" Opacity="0.5"/>
                 </StackPanel>
                 <HyperlinkButton Grid.Column="2" Content="GitHub Repository"
-                                 NavigateUri="https://github.com/RyanEwen/ImmichDrive" VerticalAlignment="Center"/>
+                                 NavigateUri="https://github.com/Nathan-Wrpt/ImmichDrive" VerticalAlignment="Center"/>
             </Grid>
         </Border>
 
